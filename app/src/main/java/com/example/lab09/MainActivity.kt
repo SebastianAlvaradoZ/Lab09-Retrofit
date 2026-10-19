@@ -67,3 +67,49 @@ fun ProgPrincipal9() {
 
     Text("Retrofit listo")   // TEMPORAL: se reemplaza en el commit 10
 }
+// Barra superior con el título de la app
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BarraSuperior() {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = "JSONPlaceHolder Access",
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        )
+    )
+}
+
+// Barra inferior con dos destinos: Inicio y Posts
+@Composable
+fun BarraInferior(navController: NavHostController) {
+    // Observa la ruta actual: al navegar, el ítem seleccionado se actualiza solo
+    val entradaActual by navController.currentBackStackEntryAsState()
+    val rutaActual = entradaActual?.destination?.route
+
+    NavigationBar(containerColor = Color.LightGray) {
+        NavigationBarItem(
+            icon = { Icon(Icons.Outlined.Home, contentDescription = "Inicio") },
+            label = { Text("Inicio") },
+            selected = rutaActual == "inicio",
+            onClick = { navController.navigate("inicio") }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Outlined.Favorite, contentDescription = "Posts") },
+            label = { Text("Posts") },
+            selected = rutaActual == "posts",
+            onClick = { navController.navigate("posts") }
+        )
+    }
+}
+
+// Pantalla de bienvenida
+@Composable
+fun ScreenInicio() {
+    Text("INICIO")
+}
