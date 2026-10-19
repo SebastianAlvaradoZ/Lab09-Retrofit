@@ -51,4 +51,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    // Corrutinas para llamadas suspend
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    // Retrofit + conversor Gson (JSON -> objetos Kotlin)
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    // Coil: carga de imágenes en Compose (se usará en el Ejercicio 1)
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    // Navegación entre pantallas
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
 }
