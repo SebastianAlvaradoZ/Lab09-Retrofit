@@ -61,4 +61,6 @@ dependencies {
     // Navegación entre pantallas
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
+    // Íconos de Material (Home, Favorite, Search...). La versión la fija el BOM
+    implementation("androidx.compose.material:material-icons-core")
 }
