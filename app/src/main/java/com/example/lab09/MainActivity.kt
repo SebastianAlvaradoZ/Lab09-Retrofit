@@ -65,7 +65,13 @@ fun ProgPrincipal9() {
     // create() genera la implementación de nuestra interfaz PostApiService
     val servicio = remember { retrofit.create(PostApiService::class.java) }
 
-    Text("Retrofit listo")   // TEMPORAL: se reemplaza en el commit 10
+    val navController = rememberNavController()   // controla la navegación
+
+    Scaffold(
+        topBar = { BarraSuperior() },
+        bottomBar = { BarraInferior(navController) },
+        content = { paddingValues -> Contenido(paddingValues, navController, servicio) }
+    )
 }
 // Barra superior con el título de la app
 @OptIn(ExperimentalMaterial3Api::class)
@@ -112,4 +118,35 @@ fun BarraInferior(navController: NavHostController) {
 @Composable
 fun ScreenInicio() {
     Text("INICIO")
+}
+
+// Contenedor de navegación: decide qué pantalla mostrar según la ruta
+@Composable
+fun Contenido(
+    pv: PaddingValues,
+    navController: NavHostController,
+    servicio: PostApiService
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(pv)   // evita que el contenido quede bajo las barras
+    ) {
+        NavHost(
+            navController = navController,
+            startDestination = "inicio"   // ruta de inicio
+        ) {
+            composable("inicio") { ScreenInicio() }
+
+            composable("posts") { ScreenPosts(navController, servicio) }
+
+            // Ruta con argumento: "postsVer/5" -> id = 5
+            composable(
+                "postsVer/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
+            ) {
+                ScreenPost(navController, servicio, it.arguments!!.getInt("id"))
+            }
+        }
+    }
 }
